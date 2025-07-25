@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <head>
+      <a href="/">Home</a>
+    </head>
+    <p><h1><%= title %></h1></p>
+    <p><h3>Usuários: <%=data.length %></h3></p>
+    <p><a href="/users/new">Cadastrar usuário</a></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Tags</th>
+          <th>Ativo</th>
+          <th colspan="2" align="center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if (data ) { %>
+        <% data.forEach(function(user) { %>
+          <tr onclick="window.location.href='/users/edit/<%= user._id %>'" title="Clique para editar">
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.tags %></td>
+            <td><%= user.active ? 'Yes' : 'No' %></td>
+            <td>
+              <!-- <form action="/users/edit/<%= user._id %>" method="GET">
+                <button type="submit">Editar</button>
+              </form> -->
+              <a href="/users/edit/<%= user._id %>">Editar</a>
+            </td>
+            <td>
+              <form action="/users/delete/<%= user._id %>" method="post">
+                <button type="submit" 
+                  onclick="if(confirm('Ação não pode ser desfeita.\nTem certeza que está excluindo o item correto?\nName: <%= user.name %>\nEmail: <%= user.email %>')) { if(!confirm('Confirma a exclusão?')){event.stopPropagation(); return false;}; } else { event.stopPropagation(); return false; }">Excluir
+                </button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td>No data available</td>
+          </tr>
+      <% } %>
+      </tbody>
+      </table>
+  </body>
+</html>

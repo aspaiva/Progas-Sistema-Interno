@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <h2>Edição de usuário</h2>
+    <div style="width: 50%;">
+        <form action="/users/edit/<%= data._id %>" method="post">
+            <fieldset width="300px">
+                <legend>Preencha os dados do usuário</legend>
+                <label for="name">Nome:</label>
+                <input type="text" name="name" placeholder="Name" value="<%= data.name %>"><br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" width="100%" placeholder="Email" value="<%= data.email %>" ><br />
+                <label for="tags">Tags:</label>
+                <input type="text" name="tags" placeholder="Tags (comma separated)" value="<%= data.tags %>"><br>
+                <label for="UF">UF:</label>
+                <select name="UF" id="UF">
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AM">AM</option>
+                    <option value="AP">AP</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MG">MG</option>
+                    <option value="MS">MS</option>
+                    <option value="MT">MT</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="PR">PR</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="RS">RS</option>
+                    <option value="SC">SC</option>
+                    <option value="SE">SE</option>
+                    <option value="SP">SP</option>
+                    <option value="TO">TO</option>
+                </select>
+                <br>
+                <label>
+                    <input type="checkbox" name="active" checked="<%= data.active %>" > Ativo
+                </label>(marque para SIM)
+            </fieldset>
+            <br>
+            <button type="submit">Salvar alterações</button>
+        </form>
+    </div>
+    <hr>
+    <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
+    <script>
+        document.getElementById("UF").value = "<%= data.UF %>";
+    </script>
+</body>
+
+</html>

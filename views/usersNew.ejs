@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <h2>Cadastro de novo usuário</h2>
+    <div style="width: 50%;">
+        <form action="/users" method="post">
+            <fieldset width="300px">
+                <legend>Preencha os dados do usuário</legend>
+                <label for="name">Nome:</label>
+                <input type="text" name="name" placeholder="Name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" placeholder="Email" required><br />
+                <label for="tags">Tags:</label>
+                <input type="text" name="tags" placeholder="Tags (comma separated)"><br>
+                <label for="UF">UF:</label>
+                <select name="UF">
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AM">AM</option>
+                    <option value="AP">AP</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MG">MG</option>
+                    <option value="MS">MS</option>
+                    <option value="MT">MT</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="PR">PR</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="RS">RS</option>
+                    <option value="SC">SC</option>
+                    <option value="SE">SE</option>
+                    <option value="SP">SP</option>
+                    <option value="TO">TO</option>
+                </select>
+                <br>
+                <label>
+                    <input type="checkbox" name="active" value="true"> Ativo
+                </label>(marque para SIM)
+            </fieldset>
+            <br>
+            <button type="submit">Incluir</button>
+        </form>
+        <script>
+            document.querySelector('input[name="active"]').checked = true; // Marcar o checkbox como ativo por padrão
+
+            if (window.location.search.includes('error')) {
+                alert('Erro ao incluir usuário. Verifique os dados e tente novamente.');
+            }
+        </script>
+        <script>
+            // document.querySelector('form').addEventListener('submit', function (event) {
+            //     // Obtenha os dados do formulário
+            //     const form = event.target;
+            //     const data = {
+            //         name: form.name.value,
+            //         email: form.email.value,
+            //         tags: form.tags.value,
+            //         UF: form.UF.value,
+            //         active: form.active.checked
+            //     };
+            //     // Exiba os dados no console ou em um alert
+            //     console.log('Dados enviados:', data);
+            //     // Se quiser mostrar em um alert:
+            //     alert(JSON.stringify(data, null, 2));
+            //     // Para impedir o envio, use: 
+            //     event.preventDefault();
+            //     // Remova event.preventDefault() para enviar normalmente após checar
+            // });
+        </script>
+    </div>
+    <hr>
+    <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
+</body>
+
+</html>

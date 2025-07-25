@@ -6,3 +6,32 @@ body {
 a {
   color: #00B7FF;
 }
+
+table thead tr {
+  background-color: #ccc;
+  color: navy;
+  text-align: left;
+}
+
+table {
+  /* width: 100%; */
+  border-collapse: collapse;
+  border: #00B7FF 1px solid;
+}
+
+table th, table td {
+  padding: 5px;
+  border: #00B7FF 1px solid;
+}
+
+table tr:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
