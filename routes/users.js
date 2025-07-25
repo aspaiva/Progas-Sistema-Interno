@@ -30,13 +30,15 @@ router.get('/', (req, res, next) => {
     });
 });
 
+// Chama tela de Cadastro
 router.get('/new', (req, res) => {
-  res.render('usersNew', { title: 'New User', data: {} })
-  .catch(error => {
-    res.render("error", {message: "Erro ao listar os clientes", error});
-  }); // Render the new user form
+  return res.render('usersNew', { title: 'Cadastrar usuário', data: {} })
+  // .catch(error => {
+  //   return res.render("error", {message: "Erro ao listar os clientes", error});
+  // }); // Render the new user form
 });
 
+//Chama tela de edição
 router.get('/edit/:id', (req, res) => {
   const userId = ObjectId.createFromHexString(req.params.id); // Assuming the user ID is passed as a query parameter
   console.log('Fetching user for edit:', userId);
@@ -58,6 +60,7 @@ router.get('/edit/:id', (req, res) => {
     });
 });
 
+// Efetua cadastro do usuario
 router.post('/', (req, res) => {
   const user = req.body; // Assuming body-parser middleware is used
 
@@ -78,6 +81,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// Faz o update do usuario
 router.post('/edit/:id', (req, res) => {
   //o id já vem com o objeto e também como parametro. Isso pode ser confuso
 

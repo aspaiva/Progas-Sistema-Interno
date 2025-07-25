@@ -20,35 +20,7 @@
                 <label for="tags">Tags:</label>
                 <input type="text" name="tags" placeholder="Tags (comma separated)" value="<%= data.tags %>"><br>
                 <label for="UF">UF:</label>
-                <select name="UF" id="UF">
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AM">AM</option>
-                    <option value="AP">AP</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MG">MG</option>
-                    <option value="MS">MS</option>
-                    <option value="MT">MT</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="PR">PR</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="RS">RS</option>
-                    <option value="SC">SC</option>
-                    <option value="SE">SE</option>
-                    <option value="SP">SP</option>
-                    <option value="TO">TO</option>
-                </select>
+                <select name="UF" id="UF"></select>
                 <br>
                 <label>
                     <input type="checkbox" name="active" checked="<%= data.active %>" > Ativo
@@ -61,7 +33,24 @@
     <hr>
     <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
     <script>
-        document.getElementById("UF").value = "<%= data.UF %>";
+        fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+        .then(response => response.json())
+        .then(dados => { 
+            console.log(dados);
+            const siglas = dados.map(i => `${i.sigla} - ${i.nome}`); //stripa o retorno e pega somente as siglas
+            siglas.sort();
+            const selector = document.getElementById('UF');
+
+            siglas.forEach(element => {
+                const opt = document.createElement('option');
+                opt.innerText = element; //.split('-')[1];
+                opt.value = element.split('-')[0].trim();
+                selector.append(opt);
+            });
+
+            document.getElementById("UF").value = "<%= data.UF %>";
+        })
+        .catch(error => alert(error));
     </script>
 </body>
 
