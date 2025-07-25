@@ -1,23 +1,31 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
-async function connnectMongoDB() {
-    console.log("DBConn: ", process.env.DATABASE_CONNECTION);
+async function connectDB() {
+    //se está conectado então só retorna o ponteiro
+    if (global.connection) return global.connection;
+    // console.log("DBConn: ", process.env.DATABASE_CONNECTION);
     const client = new MongoClient(process.env.DATABASE_CONNECTION); //Não use localhost
-    await client.connect();
-    console.log('MongoDB connected successfully');
-    global.connection = client.db('users');
+    try {
+        await client.connect();
+        console.log('MongoDB connected successfully');
+        global.connection = client.db('users');
+    } catch (error) {
+        console.error(error);
+        global.connection = null;
+    }
     // // Test the connection by fetching all users
     // const array = await global.connection.collection('users').find().limit(2).toArray(); // Fetching only 2 users for testing
     // if (!array || array.length === 0) {
     //     console.log('No users found in the database');
     //     return;
     // }
+
+    return global.connection;
 }
 
-connnectMongoDB();
-
-function findAllUsersCallbackWay(callback) {
-    return global.connection
+async function findAllUsersCallbackWay(callback) {
+    const connection = await connectDB();
+    return connection
         .collection('users')
         .find()
         .toArray((err, result) => {
@@ -30,40 +38,53 @@ function findAllUsersCallbackWay(callback) {
             // Assuming result is an array of user objects  
             callback(null, result);
         }
-    );
+        );
 }
 
-function findUserByID(userId) {
+async function findUserByID(userId) {
     const objectId = ObjectId.createFromHexString(userId);
     if (!ObjectId.isValid(objectId)) {
         return Promise.reject(new Error('Invalid user ID'));
     }
-    return global.connection.collection('users').findOne({ _id: objectId });
+
+    const connection = await connectDB();
+    return connection.collection('users').findOne({ _id: objectId });
 }
 
-function findAllUsersPromiseWay() {
-    return global.connection.collection("users").find().toArray();
+async function findAllUsersPromiseWay() {
+    const connection = await connectDB();
+    return connection.collection("users").find().toArray();
 }
 
-function insertUser(user) {
+async function insertUser(user) {
     user.active = (user.active === 'true' || user.active === 'on'); // Convert checkbox value to boolean
-    return global.connection.collection('users').insertOne(user);
+
+    const connection = await connectDB();
+    return connection.collection('users').insertOne(user);
 }
 
-function updateUser(userId, userData) {
-    if (ObjectId.isValid(userId))
-        return global.connection.collection('users').updateOne(
+async function updateUser(userId, userData) {
+    if (ObjectId.isValid(userId)) {
+        const connection = await connectDB();
+        return connection.collection('users').updateOne(
             { _id: userId },
             { $set: userData }
         );
+    }
+
+    return null;
 }
 
-function deleteUser(userId) {
+async function deleteUser(userId) {
     const objectId = ObjectId.createFromHexString(userId);
-    if (ObjectId.isValid(objectId))
-        return global.connection.collection('users').deleteOne({ _id: objectId });
-    else
+    if (ObjectId.isValid(objectId)) {
+        const connection = await connectDB();
+        return connection.collection('users').deleteOne({ _id: objectId });
+    }
+    else {
         console.Error('objectID do usuário inválido');
+        return null;
+    }
 
 }
 
@@ -73,5 +94,6 @@ module.exports = {
     findUserByID,
     insertUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    connectDB
 }

@@ -70,11 +70,11 @@ router.post('/', (req, res) => {
   db.insertUser(user)
     .then(result => {
       console.log('User inserted successfully:', result);
-      res.redirect('/users'); // Redirect to the home page after insertion
+      return res.redirect('/users'); // Redirect to the home page after insertion
     })
     .catch(err => {
       console.error('Error inserting user:', err);
-      res.status(500).send('Error inserting user');
+      return res.status(500).send('Error inserting user');
     });
 });
 
@@ -92,11 +92,11 @@ router.post('/edit/:id', (req, res) => {
   db.updateUser(userId, userData)
     .then(result => {
       console.log('User updated successfully:', result);
-      res.redirect('/users'); // Redirect to the home page after update
+      return res.redirect('/users'); // Redirect to the home page after update
     })
     .catch(err => {
       console.error('Error updating user:', err);
-      res.status(500).send('Error updating user');
+      return res.status(500).send('Error updating user');
     });
 });
 
@@ -104,7 +104,7 @@ router.post('/delete/:id', (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
     db.deleteUser(req.params.id)
       .then(result => res.redirect("/users"))
-      .catch(error => res.render('error', error));
+      .catch(error => res.render('error', {message: 'Erro ao excluir', error}));
   }
 })
 
