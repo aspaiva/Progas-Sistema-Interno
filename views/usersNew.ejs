@@ -1,60 +1,81 @@
-<html>
+<!doctype html>
+<html lang="pt-BR">
+<%- include("_head.ejs") %>
 
-<head>
-    <title>
-        <%= title %>
-    </title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
+    <body>
+        <%- include("siteNavigation.ejs") %>
+            <h3 class="mb-3">Cadastro de novo usuário</h3>
+            <form action="/users" method="post">
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <label class="col-form-label" for="name">Nome</label>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" name="name" placeholder="Nome do usuário" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <label class="col-form-label" for="email">Email</label>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="email" name="email" placeholder="Email do usuário" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <label for="tags">Tags</label>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control" type="text" name="tags"
+                            placeholder="Palavras-chaves do usuário, separadas por vírgulas">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <label for="UF">UF</label>
+                    </div>
+                    <div class="col-2">
+                        <select class="form-select" name="UF" id="UF"></select>
+                    </div>
+                    <div class="col-1">
+                        <label class="col-form-label">
+                            <input class="form-check-input" type="checkbox" name="active" value="true"> Ativo
+                        </label>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Incluir</button>
+                    </div>
+                </div>
+            </form>
+            <script>
+                fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+                    .then(response => response.json())
+                    .then(dados => {
+                        const selector = document.getElementById("UF");
+                        const siglas = dados.map(item => `${item.sigla} - ${item.nome}`);
+                        siglas.sort();
 
-<body>
-    <h2>Cadastro de novo usuário</h2>
-    <div style="width: 50%;">
-        <form action="/users" method="post">
-            <fieldset width="300px">
-                <legend>Preencha os dados do usuário</legend>
-                <label for="name">Nome:</label>
-                <input type="text" name="name" placeholder="Name" required><br>
-                <label for="email">Email:</label>
-                <input type="email" name="email" placeholder="Email" required><br />
-                <label for="tags">Tags:</label>
-                <input type="text" name="tags" placeholder="Tags (comma separated)"><br>
-                <label for="UF">UF:</label>
-                <select name="UF" id="UF"></select>
-                <br>
-                <label>
-                    <input type="checkbox" name="active" value="true"> Ativo
-                </label>(marque para SIM)
-            </fieldset>
-            <br>
-            <button type="submit">Incluir</button>
-        </form>
-        <script>
-            fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
-                .then(response => response.json())
-                .then(dados => {
-                    const selector = document.getElementById("UF");
-                    const siglas = dados.map(item => `${item.sigla} - ${item.nome}`);
-                    siglas.sort();
+                        siglas.forEach(element => {
+                            const opt = document.createElement("option");
+                            opt.innerText = element; //exibe UF - Nome do estado para facilitar pros usuários a escolha da UF sem erros
+                            opt.value = element.split('-')[0].trim(); //pega somente a sigla para o value
+                            selector.append(opt);
+                        });
+                    })
+                    .catch(error => { alert(error); return; });
 
-                    siglas.forEach(element => {
-                        const opt = document.createElement("option");
-                        opt.innerText = element; //exibe UF - Nome do estado para facilitar pros usuários a escolha da UF sem erros
-                        opt.value = element.split('-')[0].trim(); //pega somente a sigla para o value
-                        selector.append(opt);
-                    });
-                })
-                .catch(error => {alert(error); return;});
+                document.querySelector('input[name="active"]').checked = true; // Marcar o checkbox como ativo por padrão
 
-            document.querySelector('input[name="active"]').checked = true; // Marcar o checkbox como ativo por padrão
-
-            if (window.location.search.includes('error')) {
-                alert('Erro ao incluir usuário. Verifique os dados e tente novamente.');
-            }
-        </script>
-    </div>
-    <hr>
-    <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
-</body>
+                if (window.location.search.includes('error')) {
+                    alert('Erro ao incluir usuário. Verifique os dados e tente novamente.');
+                }
+            </script>
+            <hr>
+            <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
+    </body>
+    <%- include("_footer.ejs") %>
 
 </html>

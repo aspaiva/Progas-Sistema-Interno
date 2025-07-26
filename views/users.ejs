@@ -1,55 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <head>
-      <a href="/">Home</a>
-    </head>
-    <p><h1><%= title %></h1></p>
-    <p><h3>Usuários: <%=data.length %></h3></p>
-    <p><a href="/users/new">Cadastrar usuário</a></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>Tags</th>
-          <th>Ativo</th>
-          <th colspan="2" align="center">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% if (data ) { %>
-        <% data.forEach(function(user) { %>
-          <tr onclick="window.location.href='/users/edit/<%= user._id %>'" title="Clique para editar">
-            <td><%= user.name %></td>
-            <td><%= user.email %></td>
-            <td><%= user.tags %></td>
-            <td><%= user.active ? 'Yes' : 'No' %></td>
-            <td>
-              <!-- <form action="/users/edit/<%= user._id %>" method="GET">
+<%- include("_head.ejs") %>
+  <%- include("siteNavigation.ejs") %>
+
+    <body>
+      <h2 class="mb-3">
+        Usuários do sistema
+      </h2>
+      <a class="btn btn-primary mb-3" href="/users/new">Cadastrar usuário</a>
+      <table class="table table-sm table-striped table-hover table-bordered">
+        <caption>Total de Usuários: <b><%=data.length %></b></caption>
+        <thead class="table-light">
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Tags</th>
+            <th>Ativo</th>
+            <th colspan="2" class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody xclass="table-group-divider">
+          <% if (data ) { %>
+            <% data.forEach(function(user) { %>
+              <tr onclick="window.location.href='/users/edit/<%= user._id %>'" title="Clique para editar">
+                <td>
+                  <%= user.name %>
+                </td>
+                <td>
+                  <%= user.email %>
+                </td>
+                <td>
+                  <%= user.tags %>
+                </td>
+                <td>
+                  <%= user.active ? 'Yes' : 'No' %>
+                </td>
+                <td style="text-align: center;">
+                  <!-- <form action="/users/edit/<%= user._id %>" method="GET">
                 <button type="submit">Editar</button>
               </form> -->
-              <a href="/users/edit/<%= user._id %>">Editar</a>
-            </td>
-            <td>
-              <form action="/users/delete/<%= user._id %>" method="post">
-                <button type="submit" 
+                  <a href="/users/edit/<%= user._id %>" class="btn btn-sm btn-secondary">Editar</a>
+                </td>
+                <td style="text-align: center;">
+                  <!-- <form action="/users/delete/<%= user._id %>" method="post">
+                <button type="submit" class="btn btn-danger"
                   onclick="if(confirm('Ação não pode ser desfeita.\nTem certeza que está excluindo o item correto?\nName: <%= user.name %>\nEmail: <%= user.email %>')) { if(!confirm('Confirma a exclusão?')){event.stopPropagation(); return false;}; } else { event.stopPropagation(); return false; }">Excluir
                 </button>
-              </form>
-            </td>
-          </tr>
-        <% }); %>
-      <% } else { %>
-        <tr>
-          <td>No data available</td>
-          </tr>
-      <% } %>
-      </tbody>
+              </form> -->
+                  <a href="/users/delete/<%= user._id %>" class="btn btn-sm btn-danger" onclick="preDelete(<%- JSON.stringify(user) %>); return false;">Excluir
+                  </a>
+                </td>
+              </tr>
+              <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td>No data available</td>
+                  </tr>
+                  <% } %>
+        </tbody>
       </table>
-  </body>
+      
+      <script>
+        function preDelete(oUser) {
+          if (confirm('Ação não pode ser desfeita.\nTem certeza que está excluindo o item correto?\nName: ' + oUser.name + '\nEmail: ' + oUser.email)) {
+            if (!confirm('Confirma a exclusão?')) {
+              event.stopPropagation();
+              return false;
+            } else {
+              event.preventDefault();
+              event.stopPropagation();
+              fetch(`/users/delete/${oUser._id}`, { method: 'POST' })
+            }
+          } else {
+            event.stopPropagation(); return false;
+          }
+        }
+      </script>
+      <%- include("_footer.ejs") %>
+    </body>
+
 </html>

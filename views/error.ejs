@@ -1,18 +1,18 @@
 <html>
+    <%- include("_head") %>
     <body>
-        <head>
-            <a href="/">Home</a>
-        </head>
+         <%- include("siteNavigation") %>
         <h1>
             <%= message %>
         </h1>
         <h2>
             <%= error.status %>
         </h2>
+        <div class="aler alert-info">
+            Entre em contato com nosso suporte de tecnologia e informe sobre o erro.
+        </div>
         <!-- <pre><%= error.stack %></pre> -->
-        <footer>
-            <p>Copyright 2025. Progás Soluções e Engenharia de Gás Ltda</p>
-        </footer>
+        <%- include("_footer.ejs") %>
     </body>
 </html>
 

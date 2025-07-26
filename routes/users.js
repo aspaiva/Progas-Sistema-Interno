@@ -52,7 +52,7 @@ router.get('/edit/:id', (req, res) => {
         return res.status(404).send('User not found');
       }
       console.log("userbyId: ", user);
-      res.render('usersEdit', { title: 'Edit User', data: user }); // Render the edit user form with user data
+      res.render('usersEdit', { title: 'Edição de usuário', data: user }); // Render the edit user form with user data
     })
     .catch(err => {
       console.error('Error fetching user:', err);
@@ -108,7 +108,7 @@ router.post('/delete/:id', (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
     db.deleteUser(req.params.id)
       .then(result => res.redirect("/users"))
-      .catch(error => res.render('error', {message: 'Erro ao excluir', error}));
+      .catch(error => res.render('error', {message: 'Erro ao excluir', title: 'Erro no sistema', error}));
   }
 })
 

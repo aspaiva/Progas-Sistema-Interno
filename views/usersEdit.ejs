@@ -1,57 +1,65 @@
+<!doctype html>
 <html>
+<%- include("_head.ejs") %>
 
-<head>
-    <title>
-        <%= title %>
-    </title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
+    <body>
+        <%- include("siteNavigation.ejs") %>
+        <h3 class="mb-3">Edição de usuário</h3>
+            <form action="/users/edit/<%= data._id %>" method="post">
+                <div class="row mb-3">
+                    <div class="col-auto"><label class="col-form-label" for="name">Nome</label></div>
+                    <div class="col-4"><input class="form-control" type="text" name="name" placeholder="Name"
+                            value="<%= data.name %>"></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-auto"><label class="col-form-label" for="email">Email</label></div>
+                    <div class="col-auto col-4"><input class="form-control" type="email" name="email"
+                            placeholder="Email" value="<%= data.email %>"></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-auto"><label class="col-form-label" for="tags">Tags</label></div>
+                    <div class="col-auto col-4"><input class="form-control" type="text" name="tags"
+                            placeholder="Tags (comma separated)" value="<%= data.tags %>"></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-auto"><label class="col-form-label" for="UF">UF</label>
+                    </div>
+                    <div class="col-auto"><select class="form-select" name="UF" id="UF"></select>
+                    </div>
+                    <div class="col-auto">
+                        <label class="col-form-label">
+                            <input class="form-check-input" type="checkbox" name="active" checked="<%= data.active %>">
+                            Ativo
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Salvar alterações</button>
+                </div>
+            </form>
 
-<body>
-    <h2>Edição de usuário</h2>
-    <div style="width: 50%;">
-        <form action="/users/edit/<%= data._id %>" method="post">
-            <fieldset width="300px">
-                <legend>Preencha os dados do usuário</legend>
-                <label for="name">Nome:</label>
-                <input type="text" name="name" placeholder="Name" value="<%= data.name %>"><br>
-                <label for="email">Email:</label>
-                <input type="email" name="email" width="100%" placeholder="Email" value="<%= data.email %>" ><br />
-                <label for="tags">Tags:</label>
-                <input type="text" name="tags" placeholder="Tags (comma separated)" value="<%= data.tags %>"><br>
-                <label for="UF">UF:</label>
-                <select name="UF" id="UF"></select>
-                <br>
-                <label>
-                    <input type="checkbox" name="active" checked="<%= data.active %>" > Ativo
-                </label>(marque para SIM)
-            </fieldset>
-            <br>
-            <button type="submit">Salvar alterações</button>
-        </form>
-    </div>
-    <hr>
-    <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
-    <script>
-        fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-        .then(response => response.json())
-        .then(dados => { 
-            console.log(dados);
-            const siglas = dados.map(i => `${i.sigla} - ${i.nome}`); //stripa o retorno e pega somente as siglas
-            siglas.sort();
-            const selector = document.getElementById('UF');
+            <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
+            <script>
+                fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+                    .then(response => response.json())
+                    .then(dados => {
+                        console.log(dados);
+                        const siglas = dados.map(i => `${i.sigla} - ${i.nome}`); //stripa o retorno e pega somente as siglas
+                        siglas.sort();
+                        const selector = document.getElementById('UF');
 
-            siglas.forEach(element => {
-                const opt = document.createElement('option');
-                opt.innerText = element; //.split('-')[1];
-                opt.value = element.split('-')[0].trim();
-                selector.append(opt);
-            });
+                        siglas.forEach(element => {
+                            const opt = document.createElement('option');
+                            opt.innerText = element; //.split('-')[1];
+                            opt.value = element.split('-')[0].trim();
+                            selector.append(opt);
+                        });
 
-            document.getElementById("UF").value = "<%= data.UF %>";
-        })
-        .catch(error => alert(error));
-    </script>
-</body>
+                        document.getElementById("UF").value = "<%= data.UF %>";
+                    })
+                    .catch(error => alert(error));
+            </script>
+    </body>
+    <%- include("_footer.ejs") %>
 
 </html>

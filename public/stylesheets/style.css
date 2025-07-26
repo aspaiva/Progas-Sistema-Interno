@@ -1,12 +1,12 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
 }
 
 a {
   color: #00B7FF;
 }
-
+/* 
 table thead tr {
   background-color: #ccc;
   color: navy;
@@ -34,4 +34,4 @@ label {
   width: 100px;
   font-weight: bold;
   margin-bottom: 5px;
-}
+} */
