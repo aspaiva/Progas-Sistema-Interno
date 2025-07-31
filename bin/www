@@ -9,7 +9,7 @@ const debug = require('debug')('nodemongo:server');
 const http = require('http');
 
 // Set up database connection at the start
-require('../dbUsers'); // Ensure this points to your db.js file
+require('../data/dbUsers'); // Ensure this points to your db.js file
 
 /**
  * Get port from environment and store in Express.

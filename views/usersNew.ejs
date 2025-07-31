@@ -6,50 +6,64 @@
         <%- include("siteNavigation.ejs") %>
             <h3 class="mb-3">Cadastro de novo usuário</h3>
             <form action="/users" method="post">
-                <div class="row mb-3">
-                    <div class="col-auto">
-                        <label class="col-form-label" for="name">Nome</label>
+                <div class="container-fluid bg-light p-3 mb-3">
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <label class="col-form-label" for="name">Nome</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" name="name" placeholder="Nome do usuário" required>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <input class="form-control" type="text" name="name" placeholder="Nome do usuário" required>
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <label class="col-form-label" for="email">Email</label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="email" name="email" placeholder="Email do usuário"
+                                required>
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-auto">
-                        <label class="col-form-label" for="email">Email</label>
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <label for="tags">Tags</label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" name="tags"
+                                placeholder="Palavras-chaves do usuário, separadas por vírgulas">
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <input class="form-control" type="email" name="email" placeholder="Email do usuário" required>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="UF">UF</label>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-select" name="UF" id="UF"></select>
+                        </div>
+                        <div class="col-1">
+                            <label class="col-form-label">
+                                <input class="form-check-input" type="checkbox" name="active" value="true"> Ativo
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-auto">
-                        <label for="tags">Tags</label>
-                    </div>
-                    <div class="col-4">
-                        <input class="form-control" type="text" name="tags"
-                            placeholder="Palavras-chaves do usuário, separadas por vírgulas">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-auto">
-                        <label for="UF">UF</label>
-                    </div>
-                    <div class="col-2">
-                        <select class="form-select" name="UF" id="UF"></select>
-                    </div>
-                    <div class="col-1">
-                        <label class="col-form-label">
-                            <input class="form-check-input" type="checkbox" name="active" value="true"> Ativo
-                        </label>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Incluir</button>
+                    <hr>
+                    <div class="bg-light">
+                        <div class="row">
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Incluir</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
+            <div class="p-3">
+                <div class="row">
+                    <div class="form-group">
+                        <a class="btn btn-link" href="/users">Voltar</a>
+                        <a class="btn btn-link" href="/">Home</a>
+                    </div>
+                </div>
+            </div>
             <script>
                 fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
                     .then(response => response.json())
@@ -73,8 +87,8 @@
                     alert('Erro ao incluir usuário. Verifique os dados e tente novamente.');
                 }
             </script>
-            <hr>
-            <a href="/users">Voltar</a> &nbsp;<a href="/">Home</a>
+
+
     </body>
     <%- include("_footer.ejs") %>
 

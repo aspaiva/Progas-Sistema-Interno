@@ -1,4 +1,5 @@
 const { MongoClient, ObjectId } = require('mongodb');
+const DB_COLLECTION = "users";
 
 async function connectDB() {
     //se está conectado então só retorna o ponteiro
@@ -8,17 +9,11 @@ async function connectDB() {
     try {
         await client.connect();
         console.log('MongoDB connected successfully');
-        global.connection = client.db('users');
+        global.connection = client.db('progas');
     } catch (error) {
         console.error(error);
         global.connection = null;
     }
-    // // Test the connection by fetching all users
-    // const array = await global.connection.collection('users').find().limit(2).toArray(); // Fetching only 2 users for testing
-    // if (!array || array.length === 0) {
-    //     console.log('No users found in the database');
-    //     return;
-    // }
 
     return global.connection;
 }
@@ -26,7 +21,7 @@ async function connectDB() {
 async function findAllUsersCallbackWay(callback) {
     const connection = await connectDB();
     return connection
-        .collection('users')
+        .collection(DB_COLLECTION)
         .find()
         .toArray((err, result) => {
             console.clear();
@@ -48,25 +43,30 @@ async function findUserByID(userId) {
     }
 
     const connection = await connectDB();
-    return connection.collection('users').findOne({ _id: objectId });
+    return connection.collection(DB_COLLECTION).findOne({ _id: objectId });
 }
 
-async function findAllUsersPromiseWay() {
+async function findAllUsersPromiseWay(currentPage, pageSize) {
     const connection = await connectDB();
-    return connection.collection("users").find().toArray();
+    return connection
+        .collection(DB_COLLECTION)
+        .find()
+        .skip((currentPage - 1) * pageSize)
+        .limit(pageSize)
+        .toArray();
 }
 
 async function insertUser(user) {
     user.active = (user.active === 'true' || user.active === 'on'); // Convert checkbox value to boolean
 
     const connection = await connectDB();
-    return connection.collection('users').insertOne(user);
+    return connection.collection(DB_COLLECTION).insertOne(user);
 }
 
 async function updateUser(userId, userData) {
     if (ObjectId.isValid(userId)) {
         const connection = await connectDB();
-        return connection.collection('users').updateOne(
+        return connection.collection(DB_COLLECTION).updateOne(
             { _id: userId },
             { $set: userData }
         );
@@ -79,13 +79,20 @@ async function deleteUser(userId) {
     const objectId = ObjectId.createFromHexString(userId);
     if (ObjectId.isValid(objectId)) {
         const connection = await connectDB();
-        return connection.collection('users').deleteOne({ _id: objectId });
+        return connection.collection(DB_COLLECTION).deleteOne({ _id: objectId });
     }
     else {
         console.Error('objectID do usuário inválido');
         return null;
     }
 
+}
+
+async function getCount() {
+    const connection = await connectDB();
+    return await connection
+        .collection(DB_COLLECTION)
+        .countDocuments();
 }
 
 module.exports = {
@@ -95,5 +102,6 @@ module.exports = {
     insertUser,
     updateUser,
     deleteUser,
+    getCount,
     connectDB
 }
