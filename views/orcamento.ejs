@@ -1,68 +1,72 @@
 <!doctype html>
 <html>
 <%- include("_head.ejs") %>
-  <%- include("siteNavigation.ejs") %>
 
-    <body>
-      <h2 class="mb-3">
-        Solicitações de Orçamento
-      </h2>
-      <a class="btn btn-primary mb-3" href="/users/new">Fazer orçamento</a>
-      <table class="table table-sm table-striped table-hover table-bordered caption-top">
-        <caption>Total de Solicitações: <b>
-            <%= countItems %>
-          </b></caption>
-        <thead class="table-light">
-          <tr>
-            <th>Cliente</th>
-            <th>Data da Solicitação</th>
-            <th>Serviços</th>
-            <th>Status</th>
-            <th colspan="2" class="text-center">Ações</th>
-          </tr>
-        </thead>
-        <tbody xclass="table-group-divider">
-          <% if (data) { %>
-            <% data.forEach(function(solOrc) { %>
-              <tr>
-                <td>
-                  <%= solOrc.customerId %>
-                </td>
-                <td>
-                  <%= solOrc.dataSolicitacao %>
-                </td>
-                <td>
-                  <%= solOrc.listaServicos %>
-                </td>
-                <td>
-                  <%= solOrc.done ? 'Atendido' : 'Aguardando' %>
-                </td>
-                <td style="text-align: center;">
-                  <a href="/orcar/<%= solOrc._id %>" class="btn btn-sm btn-secondary"
-                    onclick="{ event.stopPropagation(); event.preventDefault(); alert('A construir') }"
-                    title="Fazer o orçamento da Solicitação">Orçar</a>
-                </td>
-              </tr>
-              <% }); %>
-                <% } else { %>
-                  <tr>
-                    <td>No data available</td>
-                  </tr>
-                  <% } %>
-        </tbody>
-      </table>
-     
+  <body>
+    <div class="container">
+      <%- include("siteNavigation.ejs") %>
+
+        <h2 class="mb-3">
+          Solicitações de Orçamento
+        </h2>
+        <a class="btn btn-primary mb-3" href="/users/new">Fazer orçamento</a>
+        <table class="table table-sm table-striped table-hover table-bordered caption-top">
+          <caption>Total de Solicitações: <b>
+              <%= countItems %>
+            </b></caption>
+          <thead class="table-light">
+            <tr>
+              <th>Cliente</th>
+              <th>Data da Solicitação</th>
+              <th>Serviços</th>
+              <th>Status</th>
+              <th colspan="2" class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody xclass="table-group-divider">
+            <% if (data) { %>
+              <% data.forEach(function(solOrc) { %>
+                <tr>
+                  <td>
+                    <%= solOrc.customerId %>
+                  </td>
+                  <td>
+                    <%= solOrc.dataSolicitacao %>
+                  </td>
+                  <td>
+                    <%= solOrc.listaServicos %>
+                  </td>
+                  <td>
+                    <%= solOrc.done ? 'Atendido' : 'Aguardando' %>
+                  </td>
+                  <td style="text-align: center;">
+                    <a href="/orcar/<%= solOrc._id %>" class="btn btn-sm btn-secondary"
+                      onclick="{ event.stopPropagation(); event.preventDefault(); alert('A construir') }"
+                      title="Fazer o orçamento da Solicitação">Orçar</a>
+                  </td>
+                </tr>
+                <% }); %>
+                  <% } else { %>
+                    <tr>
+                      <td>No data available</td>
+                    </tr>
+                    <% } %>
+          </tbody>
+        </table>
+
         <nav aria-label="Page navigation example">
           <ul class="pagination">
             <% for (i=1; i <=Math.ceil( countItems / pageSize); i++) { %>
-              <li class="page-item"><a class="page-link <%= i==page? 'active' :'' %>" href="/orcamento?page=<%= i %>&pagesize=<%= pageSize%>">
+              <li class="page-item"><a class="page-link <%= i==page? 'active' :'' %>"
+                  href="/orcamento?page=<%= i %>&pagesize=<%= pageSize%>">
                   <%= i %>
                 </a></li>
               <% } %>
           </ul>
         </nav>
 
-      <%- include("_footer.ejs") %>
-    </body>
+        <%- include("_footer.ejs") %>
+    </div>
+  </body>
 
 </html>
