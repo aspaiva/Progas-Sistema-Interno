@@ -1,22 +1,20 @@
-<!doctype html>
-<html lang="pt-BR">
 <%- include("_head.ejs") %>
 
-    <body>
+    <body class="container">
         <%- include("siteNavigation.ejs") %>
             <h3 class="mb-3">Cadastro de novo usuário</h3>
             <form action="/users" method="post">
-                <div class="container-fluid bg-light p-3 mb-3">
+                <div class="container-fluid p-3 mb-3">
                     <div class="row mb-3">
-                        <div class="col-auto">
+                        <div class="col-1">
                             <label class="col-form-label" for="name">Nome</label>
                         </div>
-                        <div class="col">
+                        <div class="col-4">
                             <input class="form-control" type="text" name="name" placeholder="Nome do usuário" required>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-auto">
+                        <div class="col-1">
                             <label class="col-form-label" for="email">Email</label>
                         </div>
                         <div class="col-4">
@@ -25,7 +23,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-auto">
+                        <div class="col-1">
                             <label for="tags">Tags</label>
                         </div>
                         <div class="col-4">
@@ -33,8 +31,22 @@
                                 placeholder="Palavras-chaves do usuário, separadas por vírgulas">
                         </div>
                     </div>
+
+                    <div class="row mb-3">
+                        <div class="col-1">
+                            <label for="password">Senha</label>
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control" type="password" name="password" placeholder="informe sua senha">
+                        </div>
+
+                        <div class="col-2">
+                            <input class="form-control" type="password" id="passwordCheck"
+                                placeholder="Repita sua senha para conferir">
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-auto">
+                        <div class="col-1">
                             <label for="UF">UF</label>
                         </div>
                         <div class="col-2">
@@ -47,7 +59,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="bg-light">
+                    <div class="xbg-light">
                         <div class="row">
                             <div class="form-group">
                                 <button class="btn btn-primary" type="submit">Incluir</button>
@@ -56,14 +68,14 @@
                     </div>
                 </div>
             </form>
-            <div class="p-3">
+            <!-- <div class="p-3">
                 <div class="row">
                     <div class="form-group">
                         <a class="btn btn-link" href="/users">Voltar</a>
                         <a class="btn btn-link" href="/">Home</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <script>
                 fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
                     .then(response => response.json())
@@ -82,6 +94,17 @@
                     .catch(error => { alert(error); return; });
 
                 document.querySelector('input[name="active"]').checked = true; // Marcar o checkbox como ativo por padrão
+
+                document.querySelector('form').addEventListener('submit', function (event) {
+                    const senha = document.querySelector('input[name="password"]').value;
+                    const senhaCheck = document.querySelector('input[id="passwordCheck"]').value;
+                    if (senha !== senhaCheck) {
+                        alert('As senhas não conferem. Por favor, digite senhas iguais.');
+                        event.preventDefault(); // Impede o envio do formulário
+                        return false;
+                    }
+                    // Se quiser validar outros campos, adicione aqui
+                });
 
                 if (window.location.search.includes('error')) {
                     alert('Erro ao incluir usuário. Verifique os dados e tente novamente.');

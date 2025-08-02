@@ -1,17 +1,6 @@
-<!-- <div  style="background-color: #1d3329; padding: 10px;">
-    <span style="width: 500px;">
-        <img src="/images/hlogo.png" width="200" /> 
-    </span>
-    <span>
-        <a href="/">Home</a> | 
-        <a href="/users">Usuários</a> |
-        <a href="http://www.progassolucoes.com.br" target="_blank">Site</a>
-    </span>
-</div> -->
-
 <nav class="navbar navbar-expand-lg mb-3" style="background-color: #1D3329;" data-bs-theme="dark">
     <div class="container-fluid d-flex justify-content-between w-100 align-items-center">
-        <a class="navbar-brand" href="/"><img src="/images/HLogo 350x100 bg-white fg-bluepetrol transp.png" width="200"
+        <a class="navbar-brand" href="/"><img src="/images/fg-golden.png" width="200"
                 alt="Logotipo Progás" title="Progás home page" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav d-flex w-100 align-items-center">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
                 <span class="border-start border-white mx-2" style="height: 24px;"></span>
                 <a class="nav-link" href="/users" title="Gestão de usuários do sistema">Usuários</a>
                 <span class="border-start border-white mx-2" style="height: 24px;"></span>
@@ -66,10 +55,14 @@
                 </div>
                 <!-- </div> -->
             </div>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" />
-                <button class="btn btn-success" type="submit">Buscar</button>
-            </form>
+            <div class="d-flex" role="search">
+                <!-- <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" /> -->
+                <button title="Site progás" class="btn btn-primary" type="button" onclick="window.open('https://www.progassolucoes.com.br', '_blank')"><i class="bi bi-globe"></i></button>&nbsp;
+                <button class="btn btn-primary" type="button" onclick="window.open('https://www.instagram.com/progassolucoes', '_blank')"><i class="bi bi-instagram"></i></button>&nbsp;
+                <button class="btn btn-primary" type="button" onclick="window.open('https://www.facebook.com/profile.php?id=61578318301438', '_blank')"><i class="bi bi-facebook"></i></button>&nbsp;
+                <button class="btn btn-primary" type="button" onclick="window.open('https://wa.me/5527996312484', '_blank')"><i class="bi bi-whatsapp"></i></button>
+                <!-- <button class="btn btn-secondary" type="button" onclick="document.body.setAttribute('data-bs-theme', 'dark');">Dark</button> -->
+            </div>
         </div>
     </div>
 </nav>

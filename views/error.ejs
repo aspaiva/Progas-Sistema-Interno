@@ -1,18 +1,18 @@
-<html>
-    <%- include("_head") %>
-    <body>
-         <%- include("siteNavigation") %>
-        <h1>
-            <%= message %>
-        </h1>
-        <h2>
-            <%= error.status %>
-        </h2>
-        <div class="aler alert-info">
-            Entre em contato com nosso suporte de tecnologia e informe sobre o erro.
-        </div>
-        <!-- <pre><%= error.stack %></pre> -->
-        <%- include("_footer.ejs") %>
-    </body>
-</html>
+<%- include("_head") %>
 
+    <body class="container">
+        <%- include("siteNavigation") %>
+            <h1>
+                <%= message %>
+            </h1>
+            <h2>
+                <%= error.status %>
+            </h2>
+            <div class="aler alert-info">
+                Entre em contato com nosso suporte de tecnologia e informe sobre o erro.
+            </div>
+            <!-- <pre><%= error.stack %></pre> -->
+            <%- include("_footer.ejs") %>
+    </body>
+
+    </html>

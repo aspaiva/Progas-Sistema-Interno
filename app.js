@@ -4,7 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
+const indexRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 const orcamentoRouter = require('./routes/orcamento');
 
@@ -19,7 +20,8 @@ app.use(express.urlencoded({ extended:true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', loginRouter);
+app.use('/home', indexRouter);
 app.use('/users', usersRouter);
 app.use('/orcamento', orcamentoRouter);
 

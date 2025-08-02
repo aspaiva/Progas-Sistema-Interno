@@ -1,12 +1,12 @@
-body {
-  padding: 50px;
-  /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
+/* body {
+  font-family: var(--bs-body-font-family);
+  padding: 25px;
 }
 
 a {
   color: #00B7FF;
 }
-/* 
+
 table thead tr {
   background-color: #ccc;
   color: navy;
@@ -14,7 +14,6 @@ table thead tr {
 }
 
 table {
-  /* width: 100%; */
   border-collapse: collapse;
   border: #00B7FF 1px solid;
 }
