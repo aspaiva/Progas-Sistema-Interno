@@ -1,38 +1,46 @@
 <%- include("_head.ejs") %>
-
-    <body class="fw-normal container">
-        <div class="">
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="mb-4">
             <center><img src="../images/8.png" width="400px"></center>
         </div>
-        <h3 class="mb-3"><%= title %></h3>
-        <form action="/" method="post">
-            <div class="container-fluid p-3 mb-3">
+        <h3 class="mb-5 text-center">
+            <%= title %>
+        </h3>
+        <form action="/" method="post" class="w-100 p-4 rounded-3 shadow mb-3 bg-secondary" 
+            style="max-width: 500px;">
+            <div class="container-fluid">
                 <div class="row mb-3">
-                    <div class="col-1">
+                    <div class="col-auto">
                         <label class="col-form-label" for="email">Email</label>
                     </div>
-                    <div class="col-4">
-                        <input class="form-control" type="email" name="email" placeholder="Email do usuário" required>
+                    <div class="col">
+                        <input class="form-control" type="email" name="email" placeholder="Email do usuário" value="<%= email ?? '' %>" required>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-1">
+                    <div class="col-auto">
                         <label for="password">Senha</label>
                     </div>
-                    <div class="col-4">
+                    <div class="col">
                         <input class="form-control" type="password" name="password"
-                            placeholder="Senha de acesso ao Progás">
+                            placeholder="Senha de acesso ao Progás" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">&nbsp;Entrar&nbsp;</button>
                         <button class="btn btn-outline-secondary offset-1" type="submit">Esqueci minha senha</button>
-
                     </div>
                 </div>
             </div>
         </form>
+        <div class="">
+            <%= message %>
+            <br>
+            <small class="text-muted">
+                <%= new Date().toLocaleString() %>  
+            </small>
+        </div>
         <!-- <div class="p-3">
                 <div class="row">
                     <div class="form-group">
@@ -46,7 +54,6 @@
                 alert('Erro ao autenticar o usuário. Verifique os dados e tente novamente.');
             }
         </script>
-    </body>
-    <%- include("_footer.ejs") %>
+    </div>
 
-        </html>
+    <%- include("_foot.ejs") %>

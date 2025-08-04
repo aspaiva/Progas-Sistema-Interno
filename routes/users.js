@@ -78,8 +78,8 @@ router.post('/', (req, res) => {
     return;
   }
 
-  if (user.password !== user.passwordCheck) {
-    res.redirect('/new?error=As senhas devem ser iguais');
+  if (!user.password) {
+    res.redirect("/new?error='Senha inválida'");
   }
 
   db.insertUser(user)
