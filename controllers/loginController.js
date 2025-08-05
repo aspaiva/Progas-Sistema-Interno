@@ -1,5 +1,6 @@
 const db = require('../data/dbUsers');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('../mail');
 
 function showLoginPage(req, res) {
     res.render('login', { title: 'Autenticação de usuário', message: "Informe os dados e tente a sorte", email: null });
@@ -30,7 +31,6 @@ async function login(req, res, next) {
 
 async function forgotPassword(req, res) {
     const email = req.body.email;
-    console.log('Forgot password request for:', email);
 
     if (!email) {
         return res.render('forgot', { title: 'Recuperar Senha', message: "Informe seu email para recuperar a senha" });
@@ -42,15 +42,24 @@ async function forgotPassword(req, res) {
     }
 
     const novaSenha = Math.random().toString(36).slice(-8);
-    console.log('Generated new password:', novaSenha);
-    //user.password = bcrypt.hashSync(novaSenha, 12);
     user.password = novaSenha; // hashing should be done in the database function
     await db.updateUser(user._id, user);
-    console.log('User password updated:', user);
-    
-    // Logic to send reset password email would go here
-    console.log('Reset password email sent to:', email);
-    res.render('login', { title: 'Autenticação de usuário', message: "Instruções para recuperação de senha enviadas para o seu email." });
+
+    nodemailer.sendMail(user.email,
+        'Progás - Recuperação de Senha',
+        `<p>Progás Soluções e Engenharia</p>
+        <p>Sua nova senha é: <strong>${novaSenha}</strong></p>
+        <p>Use esta senha para acessar o sistema e, em seguida, altere-a imediatamente.</p>`
+    ).then(() => {
+        console.log('Email sent successfully');
+        res.render('login', { title: 'Autenticação de usuário', message: "Instruções para recuperação de senha enviadas para o seu email." });
+    }).catch(err => {
+        console.error('Error sending email:', err);
+        res.render('forgot', { title: 'Recuperar senha', message: "Não foi possível enviar o email.\n" + err.message });
+    }).finally(() => {
+        nodemailer.close(); // Close the transporter after sending the email
+    });
+
 }
 
 module.exports = {
