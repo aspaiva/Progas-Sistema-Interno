@@ -37,7 +37,7 @@ app.use(session({
     mongoUrl: process.env.DATABASE_CONNECTION, // mongoUrl
     dbName: 'sessions', // dbName
     autoRemove: 'native', // Automatically remove expired sessions
-    ttl: 30 // 30 minutes
+    ttl: 30 *60 // 30 minutes
   })
 }));
 
