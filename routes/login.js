@@ -1,6 +1,7 @@
 
 const router = require('express').Router();
 const loginController = require('../controllers/loginController');
+const passport = require('passport');
 
 /* GET home page. */
 router.get('/', loginController.showLoginPage);  // <domain>/login
@@ -22,6 +23,11 @@ router.post('/forgot', loginController.forgotPassword); // Handle forgot passwor
 //     });
 // });
 
-router.post('/', loginController.login);
+// router.post('/', loginController.login);
+router.post('/', passport.authenticate('local', {
+    successRedirect: '/home',
+    failureRedirect: '/?error'
+    // failureFlash: true
+}));
 
 module.exports = router;

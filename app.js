@@ -3,11 +3,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
 
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/home');
 const usersRouter = require('./routes/users');
 const orcamentoRouter = require('./routes/orcamento');
+
+const authMiddleware = require('./middlewares/authMiddleware');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -19,6 +24,25 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended:true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+authMiddleware(passport);
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutes
+  // Use MongoDB for session storage
+  store: new MongoStore({
+    mongoUrl: process.env.DATABASE_CONNECTION, // mongoUrl
+    dbName: 'sessions', // dbName
+    autoRemove: 'native', // Automatically remove expired sessions
+    ttl: 30 // 30 minutes
+  })
+}));
+
+app.use(passport.session());  
+app.use(passport.initialize());
 
 app.use('/', loginRouter);
 app.use('/home', indexRouter);

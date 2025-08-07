@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
   // });
 
   const currentPage = parseInt(req.query.page || 1);
-  const pageSize = parseInt(req.query.pagesize || 3);
+  const pageSize = parseInt(req.query.pagesize || process.env.APP_LIST_PAGE_SIZE);
   const countItems = await db.getCount();
 
   console.log(`page: ${currentPage}, size: ${pageSize}, count: ${countItems}`);
@@ -116,9 +116,24 @@ router.post('/edit/:id', (req, res) => {
     });
 });
 
-router.post('/delete/:id', (req, res) => {
+router.post('/delete/:id', async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    db.deleteUser(req.params.id)
+    const user = await db.findUserByID(req.params.id);
+    if (!user) {
+      return res.status(404).send('Usuário não encontrado');
+    }
+
+    console.log('Deleting user:', user);
+
+    const mail = require('../mail');
+    mail.sendMail(
+      user.email,
+      'Confirmação de exclusão',
+      `Olá ${user.name}, seu usuário foi excluído com sucesso do sistema.`
+    ).catch(err => console.error('Erro ao enviar email de confirmação:', err))
+    .then(() => console.log('Email de confirmação enviado para:', user.email));
+
+    await db.deleteUser(req.params.id)
       .then(result => res.redirect("/users"))
       .catch(error => res.render('error', { message: 'Erro ao excluir', title: 'Erro no sistema', error }));
   }

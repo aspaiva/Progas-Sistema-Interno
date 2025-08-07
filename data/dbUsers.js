@@ -47,6 +47,7 @@ async function findUserByID(userId) {
     return connection.collection(DB_COLLECTION).findOne({ _id: objectId });
 
 }
+
 async function findUserByEmail(email) {
     if (!email) {
         return Promise.reject(new Error('Endereço de email não informado ou inválido'));
@@ -105,9 +106,11 @@ async function updateUser(userId, userData) {
 
 async function deleteUser(userId) {
     const objectId = ObjectId.createFromHexString(userId);
+    console.log("deleteUser: ", objectId);
     if (ObjectId.isValid(objectId)) {
         const connection = await connectDB();
-        return connection.collection(DB_COLLECTION).deleteOne({ _id: objectId });
+        return await connection.collection(DB_COLLECTION).deleteOne({ _id: objectId });
+        console.log("User deleted: ", result);
     }
     else {
         console.Error('objectID do usuário inválido');

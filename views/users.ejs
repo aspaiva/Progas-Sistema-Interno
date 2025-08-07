@@ -20,7 +20,7 @@
       <tbody xclass="table-group-divider">
         <% if (data) { %>
           <% data.forEach(function(user) { %>
-            <tr onclick="window.location.href='/users/edit/<%= user._id %>'" title="Clique para editar">
+            <tr xonclick="window.location.href='/users/edit/<%= user._id %>'" xtitle="Clique para editar">
               <td>
                 <%= user.name %>
               </td>
@@ -31,23 +31,19 @@
                 <%= user.tags %>
               </td>
               <td>
-                <%= user.active ? 'Yes' : 'No' %>
+                <%= user.active ? 'Ativo' : 'Inativo' %>
               </td>
               <td style="text-align: center;">
-                <!-- <form action="/users/edit/<%= user._id %>" method="GET">
-                <button type="submit">Editar</button>
-              </form> -->
                 <a href="/users/edit/<%= user._id %>" class="btn btn-sm btn-secondary">Editar</a>
               </td>
               <td style="text-align: center;">
-                <!-- <form action="/users/delete/<%= user._id %>" method="post">
-                <button type="submit" class="btn btn-danger"
-                  onclick="if(confirm('Ação não pode ser desfeita.\nTem certeza que está excluindo o item correto?\nName: <%= user.name %>\nEmail: <%= user.email %>')) { if(!confirm('Confirma a exclusão?')){event.stopPropagation(); return false;}; } else { event.stopPropagation(); return false; }">Excluir
-                </button>
-              </form> -->
-                <a href="/users/delete/<%= user._id %>" class="btn btn-sm btn-danger"
-                  onclick="preDelete(<%- JSON.stringify(user) %>); return false;">Excluir
-                </a>
+                <form action="/users/delete/<%= user._id %>" method="post"
+                  onsubmit="return preDelete('<%= JSON.stringify(user) %>');">
+                  <button type="submit" class="btn btn-primary" xonclick="return confirm('Confirma a exclusão?')">Excluir</button>
+                </form>
+                <!-- <a href="/users/delete/<%= user._id %>" class="btn btn-sm btn-danger"
+                  onclick="preDelete('<%= JSON.stringify(user) %>'); return false;">Excluir
+                </a> -->
               </td>
             </tr>
             <% }); %>
@@ -60,31 +56,30 @@
     </table>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
         <% for(i=1; i <=Math.ceil(countItems/pageSize); i++) { %>
           <li class="page-item"><a class="page-link <%= i==page? 'active' :'' %>"
               href="/users?page=<%= i %>&pagesize=<%= pageSize%>">
               <%= i %>
             </a></li>
           <% } %>
-            <!-- <li class="page-item"><a class="page-link" href="#">Next</a></li> -->
       </ul>
     </nav>
     <script>
       function preDelete(oUser) {
-        if (confirm('Ação não pode ser desfeita.\nTem certeza que está excluindo o item correto?\nName: ' + oUser.name + '\nEmail: ' + oUser.email)) {
-          if (!confirm('Confirma a exclusão?')) {
-            event.stopPropagation();
-            return false;
-          } else {
-            event.preventDefault();
-            event.stopPropagation();
-            fetch(`/users/delete/${oUser._id}`, { method: 'POST' })
+        oUser = JSON.parse(oUser);
+
+        try {
+          if (confirm('Ação não pode ser desfeita.\nTem certeza que está excluindo o item correto?\nNome: ' + oUser.name + '\nEmail: ' + oUser.email)) {
+            fetch(`/users/delete/${oUser._id}`, { method: 'POST' });
           }
-        } else {
-          event.stopPropagation(); return false;
+        } catch (e) {
+          alert('Erro ao tentar excluir:' + e);
+        } finally {
+          event.preventDefault(); // Impede o submit do formulário
+          event.stopPropagation(); // Impede a propagação do evento
+          return false;
         }
       }
     </script>
     <%- include("_footer") %>
-<%- include("_foot.ejs") %>
+      <%- include("_foot.ejs") %>

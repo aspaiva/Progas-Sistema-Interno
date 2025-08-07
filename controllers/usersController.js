@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 
 /* GET users listing. */
 function getAllUsers() {
-  db.findAllUsersPromiseWay()
+  db.findAllUsersPromiseWay(1, 10)
     .then(users => {
       // console.clear();
       // console.log('Users fetched successfully:', users);
@@ -21,7 +21,7 @@ function editUser(req, res) {
   const userId = ObjectId.createFromHexString(req.params.id); // Assuming the user ID is passed as a query parameter
   console.log('Fetching user for edit:', userId);
   if (!ObjectId.isValid(userId)) {
-    redirect("/error", {message: "ID do usuário inválido", error: null});
+    redirect("/error", { message: "ID do usuário inválido", error: null });
   }
 
   db.findUserByID(userId.toString())
@@ -79,12 +79,23 @@ function updateUser(req, res) {
 }
 
 function deleteUser(req, res) {
-  if (ObjectId.isValid(req.params.id)) {
-    db.deleteUser(req.params.id)
-      .then(result => res.redirect("/users"))
-      .catch(error => res.render('error', {message: 'Erro ao excluir', title: 'Erro no sistema', error}));
+  const userId = req.params.id;
+  if (ObjectId.isValid(userId)) {
+    db.deleteUser(userId)
+      .then(result => {
+        console.log('User deleted successfully:', result);
+        return res.redirect("/users");
+      })
+      .catch(error => {
+        console.error('Error deleting user:', error);
+        res.render('error', { message: 'Erro ao excluir', title: 'Erro no sistema', error })
+      });
+  }
+  else {
+    res.render('error', { message: 'ID do usuário para excluir é inválido', title: 'Erro no sistema', error: {} });
   }
 }
+
 
 module.exports = {
   getAllUsers,
