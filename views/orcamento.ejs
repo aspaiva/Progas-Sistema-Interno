@@ -1,5 +1,4 @@
 <%- include("_head.ejs") %>
-
   <body>
     <div class="container">
       <%- include("siteNavigation.ejs") %>
@@ -38,9 +37,9 @@
                     <%= solOrc.done ? 'Atendido' : 'Aguardando' %>
                   </td>
                   <td style="text-align: center;">
-                    <a href="/orcar/<%= solOrc._id %>" class="btn btn-sm btn-secondary"
+                    <a href="/orcar/<%= solOrc._id %>" class="btn btn-sm btn-primary"
                       onclick="{ event.stopPropagation(); event.preventDefault(); alert('A construir') }"
-                      title="Fazer o orçamento da Solicitação">Orçar</a>
+                      title="Fazer o orçamento da Solicitação"><i class="bi bi-calculator"></i></a>
                   </td>
                 </tr>
                 <% }); %>
@@ -62,9 +61,8 @@
               <% } %>
           </ul>
         </nav>
-
-        <%- include("_footer.ejs") %>
     </div>
+    <%- include("_footer.ejs") %>
+    <%- include("_foot.ejs") %>
   </body>
-
 </html>

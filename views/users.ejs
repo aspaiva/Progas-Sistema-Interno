@@ -13,6 +13,8 @@
           <th>Nome</th>
           <th>Email</th>
           <th>Tags</th>
+          <th>UF</th>
+          <th>Papel</th>
           <th>Ativo</th>
           <th colspan="2" class="text-center">Ações</th>
         </tr>
@@ -31,19 +33,22 @@
                 <%= user.tags %>
               </td>
               <td>
+                <%= user.UF %>
+              </td>
+              <td>
+                <%= user.role == 0 ? 'Consulta' : user.role == 1 ? 'Operador' : user.role == 2 ? 'Coordenador' : user.role == 9 ? 'Administrador' : 'Desconhecido' %>
+              </td> 
+              <td>
                 <%= user.active ? 'Ativo' : 'Inativo' %>
               </td>
               <td style="text-align: center;">
-                <a href="/users/edit/<%= user._id %>" class="btn btn-sm btn-secondary">Editar</a>
+                <a href="/users/edit/<%= user._id %>" class="btn btn-sm btn-secondary" title="Alterar"><i class="bi bi-person-gear"></i></a>
               </td>
               <td style="text-align: center;">
                 <form action="/users/delete/<%= user._id %>" method="post"
                   onsubmit="return preDelete('<%= JSON.stringify(user) %>');">
-                  <button type="submit" class="btn btn-primary" xonclick="return confirm('Confirma a exclusão?')">Excluir</button>
+                  <button type="submit" class="btn btn-sm btn-primary" xonclick="return confirm('Confirma a exclusão?')" title="Excluir"><i class="bi bi-person-x"</button>
                 </form>
-                <!-- <a href="/users/delete/<%= user._id %>" class="btn btn-sm btn-danger"
-                  onclick="preDelete('<%= JSON.stringify(user) %>'); return false;">Excluir
-                </a> -->
               </td>
             </tr>
             <% }); %>

@@ -30,4 +30,18 @@ router.post('/', passport.authenticate('local', {
     // failureFlash: true
 }));
 
+router.post('/logout', (req, res, next) => {
+    req.logout(err => {
+        if (err) { return next(err); }
+        // console.log('User to be logged out');
+        req.session.destroy(err => {
+            if (err) {
+                // console.error('Logout error:', err);
+                return res.render('login', { title: 'Autenticação de usuário', message: "Erro ao fazer logout." });
+            }
+            res.render('login', { title: 'Autenticação de usuário', message: "Você foi desconectado com sucesso." });
+        });
+    });
+}); // Handle reset password logic
+
 module.exports = router;

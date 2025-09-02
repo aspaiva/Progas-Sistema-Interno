@@ -4,10 +4,9 @@
             <center><img src="../images/8.png" width="400px"></center>
         </div>
         <h3 class="mb-5 text-center">
-            <%= title %>
+            Autenticação de usuário
         </h3>
-        <form action="/" method="post" class="w-100 p-4 rounded-3 shadow mb-3 bg-secondary" 
-            style="max-width: 500px;">
+        <form action="/" method="post" class="w-100 p-4 rounded-3 shadow mb-3" style="max-width: 500px;">
             <div class="container-fluid">
                 <div class="row mb-3">
                     <div class="col-auto">
@@ -36,24 +35,20 @@
         </form>
         <div class="">
             <%= message %>
-            <br>
-            <small class="text-muted">
-                <%= new Date().toLocaleString() %>  
-            </small>
         </div>
-        <!-- <div class="p-3">
-                <div class="row">
-                    <div class="form-group">
-                        <a class="btn btn-link" href="/users">Voltar</a>
-                        <a class="btn btn-link" href="/">Home</a>
-                    </div>
-                </div>
-            </div> -->
         <script>
             if (window.location.search.includes('error')) {
                 alert('Erro ao autenticar o usuário. Verifique os dados e tente novamente.');
             }
         </script>
     </div>
+    <center class="mt-5">
+        <button class="btn btn-secondary ms-3" type="button"
+        onclick="document.documentElement.setAttribute('data-bs-theme', 'dark');" title="Fundo escuro"><i
+        class="bi bi-lightbulb-off"></i></button>
+        <button class="btn btn-secondary ms-1" type="button"
+        onclick="document.documentElement.setAttribute('data-bs-theme', 'light');" title="Fundo claro"><i
+        class="bi bi-lightbulb"></i></button>
+    </center>
 
     <%- include("_foot.ejs") %>

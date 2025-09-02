@@ -4,7 +4,7 @@
         <%- include("siteNavigation.ejs") %>
             <h3 class="mb-3">Cadastro de novo usuário</h3>
             <form action="/users" method="post">
-                <div class="container-fluid p-3 mb-3">
+                <div class="container-fluid p-3 mb-3 rounded-3 shadow">
                     <div class="row mb-3">
                         <div class="col-1">
                             <label class="col-form-label" for="name">Nome</label>
@@ -45,7 +45,7 @@
                                 placeholder="Repita sua senha para conferir">
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-1">
                             <label for="UF">UF</label>
                         </div>
@@ -56,6 +56,19 @@
                             <label class="col-form-label">
                                 <input class="form-check-input" type="checkbox" name="active" value="true"> Ativo
                             </label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-1">
+                            <label for="role">Papel</label>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-select" name="role" id="role">
+                                <option value="0">Consulta</option>
+                                <option value="1">Operador</option>
+                                <option value="2">Coordenador</option>
+                                <option value="9">Administrador</option>
+                            </select>
                         </div>
                     </div>
                     <hr>

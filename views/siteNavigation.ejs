@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg mb-3" style="background-color: #1D3329;" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg mb-3 shadow rounded-3" xstyle="background-color: #1D3329;" xdata-bs-theme="dark">
     <div class="container-fluid d-flex justify-content-between w-100 align-items-center">
-        <a class="navbar-brand" href="/"><img src="/images/Logo-navbar.png" width="200"
-                alt="Logotipo Progás" title="Progás home page" /></a>
+        <a class="navbar-brand" href="/home"><img src="/images/Logo-navbar.png" width="200" alt="Logotipo Progás"
+                title="Progás home page" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,6 @@
                 <a class="nav-link" href="/orcamento" title="Orçamentos">Orçamentos</a>
                 <span class="border-start border-white mx-2" style="height: 24px;"></span>
 
-                <!-- <div class="navbar-nav me-auto mb-2 mb-lg-0"> -->
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -32,37 +31,35 @@
                                 Marketing</a></li>
                     </ul>
                 </div>
-                <!-- </div>
-                <div class="navbar-nav me-auto mb-2 mb-lg-0"> -->
-                <span class="border-start border-white mx-2" style="height: 24px;"></span>
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Links
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="http://www.progassolucoes.com.br" target="_blank">Site
-                                Progás</a></li>
-                        <li><a class="dropdown-item" href="https://www.instagram.com/progassolucoes/"
-                                target="_blank">Instagram</a></li>
-                        <li><a class="dropdown-item" href="https://www.facebook.com/profile.php?id=61578318301438"
-                                target="_blank">Facebook Page</a></li>
-                        <!-- <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Tecnologia | Marketing</a></li> -->
-                    </ul>
-                </div>
-                <!-- </div> -->
-            </div>
-            <div class="d-flex" role="search">
-                <!-- <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" /> -->
-                <button title="Site progás" class="btn btn-primary" type="button" onclick="window.open('https://www.progassolucoes.com.br', '_blank')"><i class="bi bi-globe"></i></button>&nbsp;
-                <button class="btn btn-primary" type="button" onclick="window.open('https://www.instagram.com/progassolucoes', '_blank')"><i class="bi bi-instagram"></i></button>&nbsp;
-                <button class="btn btn-primary" type="button" onclick="window.open('https://www.facebook.com/profile.php?id=61578318301438', '_blank')"><i class="bi bi-facebook"></i></button>&nbsp;
-                <button class="btn btn-primary" type="button" onclick="window.open('https://wa.me/5527996312484', '_blank')"><i class="bi bi-whatsapp"></i></button>
-                <!-- <button class="btn btn-secondary" type="button" onclick="document.body.setAttribute('data-bs-theme', 'dark');">Dark</button> -->
             </div>
         </div>
+        <div class="d-flex">
+            <!-- <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" /> -->
+            <button title="Site progás" class="btn btn-primary me-1" type="button"
+                onclick="window.open('https://www.progassolucoes.com.br', '_blank')"><i
+                    class="bi bi-globe"></i></button>
+            <button class="btn btn-primary me-1" type="button"
+                onclick="window.open('https://www.instagram.com/progassolucoes', '_blank')"><i
+                    class="bi bi-instagram"></i></button>
+            <button class="btn btn-primary me-1" type="button"
+                onclick="window.open('https://www.facebook.com/profile.php?id=61578318301438', '_blank')"><i
+                    class="bi bi-facebook"></i></button>
+            <button class="btn btn-primary" type="button"
+                onclick="window.open('https://wa.me/5527996312484', '_blank')"><i class="bi bi-whatsapp"></i></button>
+
+            <button class="btn btn-secondary ms-3" type="button"
+                onclick="document.documentElement.setAttribute('data-bs-theme', 'dark');" title="Fundo escuro"><i
+                    class="bi bi-lightbulb-off"></i></button>
+            <button class="btn btn-secondary ms-1" type="button"
+                onclick="document.documentElement.setAttribute('data-bs-theme', 'light');" title="Fundo claro"><i
+                    class="bi bi-lightbulb"></i></button>
+
+            <form action="/logout" method="post">
+                <button class="btn btn-secondary ms-1" type="submit"
+                    onclick="if (confirm('Encerrar sua sessão?')) return true; else return false;"
+                    title="Sair do sistema"><i class="bi bi-box-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
     </div>
 </nav>

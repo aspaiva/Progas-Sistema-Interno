@@ -14,6 +14,8 @@ const authMiddleware = require('./middlewares/authMiddleware');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+const permissions = require('./middlewares/permissionMiddleware');
+
 const app = express();
 
 // view engine setup
@@ -45,9 +47,10 @@ app.use(passport.session());
 app.use(passport.initialize());
 
 app.use('/', loginRouter);
+app.use('/login', loginRouter);
 app.use('/home', indexRouter);
-app.use('/users', usersRouter);
-app.use('/orcamento', orcamentoRouter);
+app.use('/users', permissions, usersRouter);
+app.use('/orcamento', permissions, orcamentoRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

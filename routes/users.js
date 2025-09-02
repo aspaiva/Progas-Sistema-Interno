@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
       // console.clear();
       // console.log('Users fetched successfully:', users);
       // Render the index view with the fetched users
-      return res.render('users', { title: 'Lista de usuários', data: users, countItems: countItems, page: currentPage, pageSize });
+      return res.render('users', { title: 'Lista de usuários', data: users, countItems: countItems, page: currentPage, pageSize, user: req.user });
     })
     .catch(err => {
       console.error('Error fetching users:', err);
@@ -40,9 +40,9 @@ router.get('/', async (req, res, next) => {
 // Chama tela de Cadastro
 router.get('/new', (req, res) => {
   if (req.query.error)
-    return res.render('usersNew', { title: 'Cadastrar usuário', data: req.body, message: error });
+    return res.render('usersNew', { title: 'Cadastrar usuário', data: req.body, message: error, user: req.user });
   else
-    return res.render('usersNew', { title: 'Cadastrar usuário', data: {} });
+    return res.render('usersNew', { title: 'Cadastrar usuário', data: {}, user: req.user });
 });
 
 //Chama tela de edição
@@ -60,7 +60,9 @@ router.get('/edit/:id', (req, res) => {
         return res.status(404).send('User not found');
       }
       console.log("userbyId: ", user);
-      res.render('usersEdit', { title: 'Edição de usuário', data: user }); // Render the edit user form with user data
+
+      // user: req.user -> logged user, not the user being edited
+      res.render('usersEdit', { title: 'Edição de usuário', data: user, user: req.user }); // Render the edit user form with user data
     })
     .catch(err => {
       console.error('Error fetching user:', err);

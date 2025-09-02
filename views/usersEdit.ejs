@@ -30,6 +30,19 @@
                         </label>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-1">
+                        <label for="role">Papel</label>
+                    </div>
+                    <div class="col-2">
+                        <select class="form-select" name="role" id="role" value="<%= data.role %>">
+                            <option value="0">Consulta</option>
+                            <option value="1">Operador</option>
+                            <option value="2">Coordenador</option>
+                            <option value="9">Administrador</option>
+                        </select>
+                    </div>
+                </div>
                 <hr>
                 <div class="row">
                     <div class="form-group">
