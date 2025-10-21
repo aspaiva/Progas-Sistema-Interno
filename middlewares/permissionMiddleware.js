@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
 
         const url = req.originalUrl;
 
-        if ((url.includes('/users') && req.user.role === '9') ||
+        if ((url.includes('/users') && parseInt(req.user.role) === 9) ||
             (url.includes('/orcamento') && parseInt(req.user.role) > 0)) {
             // User is authenticated, proceed to the next middleware or route handler
             return next();

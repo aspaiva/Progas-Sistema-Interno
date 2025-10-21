@@ -3,7 +3,10 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('../mail');
 
 function showLoginPage(req, res) {
-    res.render('login', { title: 'Autenticação de usuário', message: "Informe os dados e tente a sorte", email: req.user.email, user: req.user  });
+    if (req.user) 
+        return res.render('login', { title: 'Autenticação de usuário', message: "Informe os dados e tente a sorte", email: req.user.email, user: req.user  });
+    else
+        return res.render('login', { title: 'Autenticação de usuário', message: "Informe os dados e tente a sorte", email: '', user: null  });
 };
 
 async function login(req, res, next) {
