@@ -33,13 +33,12 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutes
-  // Use MongoDB for session storage
-  store: new MongoStore({
-    mongoUrl: process.env.DATABASE_CONNECTION, // mongoUrl
-    dbName: 'sessions', // dbName
-    autoRemove: 'native', // Automatically remove expired sessions
-    ttl: 30 *60 // 30 minutes
+  cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutos
+  store: MongoStore.create({
+    mongoUrl: process.env.DATABASE_CONNECTION,
+    dbName: 'sessions',
+    autoRemove: 'native',
+    ttl: 30 * 60
   })
 }));
 
