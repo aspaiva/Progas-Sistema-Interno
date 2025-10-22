@@ -69,7 +69,10 @@ authMiddleware(passport);
   //   })
   // }));
 
-  app.use('/', loginRouter);
+  app.get('/', (req, res) => {
+    res.send('Servidor Express está funcionando!');
+  });
+
   app.use('/login', loginRouter);
   app.use('/home', indexRouter);
   app.use('/users', permissions, usersRouter);
@@ -92,7 +95,7 @@ authMiddleware(passport);
   });
 
   // Inicie seu servidor aqui
-  app.listen(3000, '0.0.0.0', () => {
+  app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
     console.log('Servidor rodando na porta 3000 via ipv4');
   });
 })();
