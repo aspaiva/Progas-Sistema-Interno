@@ -92,8 +92,8 @@ authMiddleware(passport);
   });
 
   // Inicie seu servidor aqui
-  app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+  app.listen(3000, '0.0.0.0', () => {
+    console.log('Servidor rodando na porta 3000 via ipv4');
   });
 })();
 
