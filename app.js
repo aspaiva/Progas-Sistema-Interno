@@ -57,10 +57,10 @@ app.use('/login', loginRouter);
 app.use('/users', permissionMiddleware, usersRouter);
 app.use('/orcamento', permissionMiddleware, orcamentoRouter);
 
-// Inicie seu servidor aqui
-app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
-  console.log('Servidor rodando na porta 3000 via ipv4');
-});
+// // Inicie seu servidor aqui
+// app.listen(process.env.PORT || 3000, '0.0.0.0', () => {
+//   console.log('Servidor rodando na porta 3000 via ipv4');
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
