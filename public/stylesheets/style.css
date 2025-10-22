@@ -1,3 +1,17 @@
+h1 {
+  color: #006575;
+}
+
+h2 {
+  color: #006575;
+}
+
+h3 {
+  color: #006575;
+}
+
+/* E assim por diante para h4, h5, h6 */
+
 /* body {
   font-family: var(--bs-body-font-family);
   padding: 25px;
