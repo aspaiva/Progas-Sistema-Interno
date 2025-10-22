@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -29,18 +31,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 authMiddleware(passport);
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutos
-  store: MongoStore.create({
-    mongoUrl: process.env.DATABASE_CONNECTION,
-    dbName: 'sessions',
-    autoRemove: 'native',
-    ttl: 30 * 60
-  })
-}));
+MongoStore.create({
+  mongoUrl: process.env.DATABASE_CONNECTION,
+  dbName: 'sessions',
+  autoRemove: 'native',
+  ttl: 30 * 60
+}).then(store => {
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 30 * 60 * 1000 },
+    store
+  }));
+}).catch(err => {
+  console.error('Erro ao conectar ao MongoStore:', err);
+});
+
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutos
+//   store: MongoStore.create({
+//     mongoUrl: process.env.DATABASE_CONNECTION,
+//     dbName: 'sessions',
+//     autoRemove: 'native',
+//     ttl: 30 * 60
+//   })
+// }));
 
 app.use(passport.session());  
 app.use(passport.initialize());
