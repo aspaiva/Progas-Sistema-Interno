@@ -10,11 +10,11 @@ module.exports = (req, res, next) => {
             return next();
         }
 
-        return res.render('error' , {
-            message: 'Você não tem permissão para acessar esta página.',
-            title: 'Acesso Negado',
-            error: { status: 403, stack: 'Você não tem permissão para acessar esta página.' }
-        });
+        // return res.render('error' , {
+        //     message: 'Você não tem permissão para acessar esta página.',
+        //     title: 'Acesso Negado',
+        //     error: { status: 403, stack: 'Você não tem permissão para acessar esta página.' }
+        // });
 
     }
 

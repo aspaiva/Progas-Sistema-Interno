@@ -6,15 +6,16 @@ const { Passport } = require('passport');
 module.exports = (passport) => {
 
     passport.serializeUser((user, done) => {
-        done(null, user._id);
+        done(null, user._id); //chamada do callback com o id do usuário. Estamos serializando apenas o id para economizar espaço na sessão. é suficiente para identificar o usuário posteriormente.
     })
 
+    // desserializar o usuário a partir do id salvo na sessão, pra quando precisarmos dos dados completos do usuário.
     passport.deserializeUser(async (id, done) => {
         try {
             const user = await db.findUserByID(id);
             done(null, user);   
         } catch (error) {
-            done(error, null);  
+            done(error, false);  
         }
     })
 
@@ -32,7 +33,7 @@ module.exports = (passport) => {
                 // Check password
                 const isMatch = bcrypt.compareSync(password, user.password);
                 if (!isMatch) {
-                    return done(null, false, { message: 'Incorrect password.' });
+                    return done(null, false, { message: 'Usuário/senha incorreto.' });
                 }
                 // If everything is ok, return user
                 return done(null, user);

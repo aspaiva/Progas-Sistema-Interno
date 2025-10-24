@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('../mail');
 
 function showLoginPage(req, res) {
+    console.log('Rendering login page for user:', req.user);
     if (req.user) 
         return res.render('login', { title: 'Autenticação de usuário', message: "Informe os dados e tente a sorte", email: req.user.email, user: req.user  });
     else
@@ -10,6 +11,7 @@ function showLoginPage(req, res) {
 };
 
 async function login(req, res, next) {
+    console.log('Login request body:', req.body);
     const login = req.body;
     console.log('Login attempt:', login.email, login.password);
 
@@ -25,7 +27,6 @@ async function login(req, res, next) {
         return res.render('login', { title: 'Autenticação de usuário', message: "Usuário ou senha incorretos.", email: login.email });
     }
 
-    console.log('User found:', user);
     if (bcrypt.compareSync(login.password, user.password))
         return res.render('index', { title: "Sistema Progás" });
     else

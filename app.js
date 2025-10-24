@@ -31,28 +31,30 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-authMiddleware(passport);
+authMiddleware(passport); // Passport configuration. O middleware deve ser configurado antes da sessão. Ele espera um objeto passport como argumento.
 
+// usamos uma sessão para manter o estado de autenticação do usuário entre as requisições.
+// A sessão será armazenada no MongoDB para persistência. Mesmo que o servidor reinicie, a sessão do usuário permanecerá ativa até expirar.
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: false, // não salva a sessão se nada foi modificado
+    saveUninitialized: false, // não cria uma sessão até que algo seja armazenado nela. Util para evitar sessões vazias e quando há áreas públicas (nao autenticadas) no site.
     cookie: { maxAge: 30 * 60 * 1000 }, // 30 minutos
     store: MongoStore.create({
       mongoUrl: process.env.DATABASE_CONNECTION,
       dbName: 'sessions',
       autoRemove: 'native',
-      ttl: 30 * 60
+      ttl: 30 * 60 // 30 minutos
     })
   })
 );
 
-app.use(passport.session());
 app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/', indexRouter);
-app.use('/home', indexRouter);
+app.use('/',  indexRouter);
+app.use('/home',  indexRouter);
 app.use('/login', loginRouter);
 app.use('/users', permissionMiddleware, usersRouter);
 app.use('/orcamento', permissionMiddleware, orcamentoRouter);

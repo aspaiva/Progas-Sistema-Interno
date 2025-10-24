@@ -87,7 +87,7 @@ router.post('/', (req, res) => {
   db.insertUser(user)
     .then(result => {
       console.log('User inserted successfully:', result);
-      return res.redirect('/users'); // Redirect to the home page after insertion
+      return res.redirect('/'); // Redirect to the home page after insertion
     })
     .catch(err => {
       console.error('Error inserting user:', err);

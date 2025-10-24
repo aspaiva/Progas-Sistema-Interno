@@ -13,7 +13,7 @@
                         <label class="col-form-label" for="email">Email</label>
                     </div>
                     <div class="col">
-                        <input class="form-control" type="email" name="email" placeholder="Email do usuário" required>
+                        <input class="form-control" type="email" name="email" id="email" placeholder="Email do usuário" required autocomplete="email">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -21,14 +21,14 @@
                         <label for="password">Senha</label>
                     </div>
                     <div class="col">
-                        <input class="form-control" type="password" name="password"
-                            placeholder="Senha de acesso ao Progás" required>
+                        <input class="form-control" type="password" name="password" id="password"
+                            placeholder="Senha de acesso ao Progás" required autocomplete="current-password">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">&nbsp;Entrar&nbsp;</button>
-                        <a class="btn btn-link" href="/forgot">Esqueci minha senha</a>
+                        <a class="btn btn-link" href="/login/forgot">Esqueci minha senha</a>
                     </div>
                 </div>
             </div>
