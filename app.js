@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 dotenv.config();
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -30,6 +31,9 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+console.log(process.env.DATABASE_CONNECTION);
+console.log(process.env.SESSION_SECRET);
 
 authMiddleware(passport); // Passport configuration. O middleware deve ser configurado antes da sessão. Ele espera um objeto passport como argumento.
 
