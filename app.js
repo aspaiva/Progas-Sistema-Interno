@@ -32,8 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log(process.env.DATABASE_CONNECTION);
-console.log(process.env.SESSION_SECRET);
+// console.log(process.env.DATABASE_CONNECTION);
+// console.log(process.env.SESSION_SECRET);
 
 authMiddleware(passport); // Passport configuration. O middleware deve ser configurado antes da sessão. Ele espera um objeto passport como argumento.
 
